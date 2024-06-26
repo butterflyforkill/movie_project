@@ -5,14 +5,18 @@ import matplotlib.pyplot as plt
 def list_of_movies(movies_dic):
     length = len(movies_dic)
     print(f"{length} movies in total")
-    for movie, rating in movies_dic.items():
-        print(f"{movie}: {rating}")
+    for movie_name, movies_data in movies_dic.items():
+        print(f"{movie_name}: {movies_data['rating']}, {movies_data['year_of_release']}")
 
 
 def add_movie(movies_dic):
     movie = input("Enter new movie name: ")
     rating = float(input("Enter new movie rating: "))
-    movies_dic[movie] = rating
+    year = int(input("Please, enter the year of release: "))
+    movies_dic[movie] = {
+        'rating': rating,
+        'year_of_release': year
+    }
     print(f"Movie {movie} successfully added")
 
 
@@ -29,65 +33,64 @@ def update_movie(movies_dic):
     movie = input("Enter movie name: ")
     rating = float(input("Enter new movie rating: "))
     if movie in movies_dic:
-        movies_dic[movie] = rating
+        movies_dic[movie].update([('rating', rating)])
         print(f"Movie {movie} successfully updated")
     else:
         print(f"ERROR: {movie} doesn't exist in the library")
 
 
 def stats(movies_dic):
-    all_rating = list(movies_dic.values())
+    all_rating = [movie_data['rating'] for movie_data in movies_dic.values()]
+    
     length_movie_dic = len(all_rating)
+    
     average_rating = sum(all_rating) / length_movie_dic
+    
+    all_rating.sort()
+    
     if length_movie_dic % 2 == 0:
         index = length_movie_dic // 2
-        all_rating.sort()
         median_rating = (all_rating[index] + all_rating[index - 1]) / 2
     else:
         index = length_movie_dic // 2
-        all_rating.sort()
         median_rating = all_rating[index]
-    best_movie = max(movies_dic.items())
-    worst_movie = []
-    worst_rating = 10
-    for movie, rating in movies_dic.items():
-        if rating < worst_rating:
-            worst_rating = rating
-            worst_movie = [movie, worst_rating]
+    
+    best_movie = max(movies_dic.items(), key=lambda x: x[1]['rating'])
+    
+    worst_movie = min(movies_dic.items(), key=lambda x: x[1]['rating'])
+    
     print(f"Average rating: {average_rating}")
     print(f"Median rating: {median_rating}")
-    print(f"Best movie: {best_movie[0]}, {best_movie[1]}")
-    print(f"Worst movie: {worst_movie[0]}, {worst_movie[1]}")
+    print(f"Best movie: {best_movie[0]}, {best_movie[1]['rating']}")
+    print(f"Worst movie: {worst_movie[0]}, {worst_movie[1]['rating']}")
 
 
 def random_movie(movies_dic):
     [random_movie] = random.sample(sorted(movies_dic.items()), 1)
-    print(f"Your movie for tonight: {random_movie[0]}, it's rated {random_movie[1]}")
+    print(f"Your movie for tonight: {random_movie[0]}, it's rated {random_movie[1]['rating']}")
 
 
 def search_movie(movies_dic):
     search_path = input("Enter part of movie name: ")
-    for movie, rating in movies_dic.items():
+    for movie, movie_data in movies_dic.items():
         if search_path.lower() in movie.lower():
-            print(f"{movie}, {rating}")
+            print(f"{movie}, {movie_data['rating']}")
 
 
 def movies_sorted(movies_dic):
-    sorted_movies = sorted(movies_dic.items(), key=lambda item: item[1], reverse=True)
-    for movie in sorted_movies:
-        print(f"{movie[0]}: {movie[1]}")
+    sorted_movies = sorted(movies_dic.items(), key=lambda item: item[1]['rating'], reverse=True)
+    for movie, details in sorted_movies:
+        print(f"{movie}: {details['rating']}")
 
 
 def create_rating_histogram(movies_dic):
-    ratings = list(movies_dic.values())
-
+    ratings = [movie['rating'] for movie in movies_dic.values()]
     plt.hist(ratings, bins=10)
     plt.xlabel("Movie Rating")
     plt.ylabel("Number of Movies")
     plt.title("Distribution of Movie Ratings")
     plt.grid(True)
     filename = input("Enter filename (e.g., ratings.png): ")
-
     plt.savefig(filename)
     print(f"Histogram saved as {filename}")
 
@@ -101,9 +104,9 @@ def exit_program():
 def display_menu():
     print("********** My Movies Database **********")
     print(f"Menu:\n0. Exit\n1. List movies\n2. Add movie\n3." 
-          f"Delete movie\n4. Update movie\n5. Stats\n6."
-          f"Random movie\n7. Search movie\n8. Movies sorted by rating\n9."
-          f"Create Rating Histogram\n")
+          f" Delete movie\n4. Update movie\n5. Stats\n6."
+          f" Random movie\n7. Search movie\n8. Movies sorted by rating\n9."
+          f" Create Rating Histogram\n")
 
 def get_user_input():
     while True:
@@ -119,16 +122,46 @@ def get_user_input():
 def main():
     # Dictionary to store the movies and the rating
     movies = {
-        "The Shawshank Redemption": 9.5,
-        "Pulp Fiction": 8.8,
-        "The Room": 3.6,
-        "The Godfather": 9.2,
-        "The Godfather: Part II": 9.0,
-        "The Dark Knight": 9.0,
-        "12 Angry Men": 8.9,
-        "Everything Everywhere All At Once": 8.9,
-        "Forrest Gump": 8.8,
-        "Star Wars: Episode V": 8.7
+        "The Shawshank Redemption": {
+            'rating': 9.5,
+            'year_of_release': 1964
+            },
+        "Pulp Fiction": {
+            'rating': 9.5, 
+            'year_of_release': 1964
+            },
+        "The Room": {
+            'rating': 9.5, 
+            'year_of_release': 1964
+            },
+        "The Godfather": {
+            'rating': 9.5, 
+            'year_of_release': 1964
+            },
+        "The Godfather: Part II": {
+            'rating': 9.5, 
+            'year_of_release': 1964
+            },
+        "The Dark Knight": {
+            'rating': 9.5, 
+            'year_of_release': 1964}
+            ,
+        "12 Angry Men": {
+            'rating': 1.9, 
+            'year_of_release': 1964
+            },
+        "Everything Everywhere All At Once": {
+            'rating': 9.5,
+             'year_of_release': 1964
+             },
+        "Forrest Gump": {
+            'rating': 9.5, 
+            'year_of_release': 1964
+            },
+        "Star Wars: Episode V": {
+            'rating': 9.5, 
+            'year_of_release': 1964
+            }
     }       
 
     # Your code here
