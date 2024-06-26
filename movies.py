@@ -3,6 +3,15 @@ import matplotlib.pyplot as plt
 
 
 def list_of_movies(movies_dic):
+    """
+    Print the list of movies with their ratings and year of release.
+
+    Args:
+    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+
+    Returns:
+    None
+    """
     length = len(movies_dic)
     print(f"{length} movies in total")
     for movie_name, movies_data in movies_dic.items():
@@ -10,6 +19,15 @@ def list_of_movies(movies_dic):
 
 
 def add_movie(movies_dic):
+    """
+    Add a new movie to the movies dictionary.
+
+    Args:
+    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+
+    Returns:
+    None
+    """
     movie = input("Enter new movie name: ")
     rating = float(input("Enter new movie rating: "))
     year = int(input("Please, enter the year of release: "))
@@ -21,6 +39,15 @@ def add_movie(movies_dic):
 
 
 def delete_movie(movies_dic):
+    """
+    Delete a movie from the movies dictionary.
+
+    Args:
+    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+
+    Returns:
+    None
+    """
     movie = input("Enter movie name to delete: ")
     if movie in movies_dic:
         del movies_dic[movie]
@@ -30,6 +57,15 @@ def delete_movie(movies_dic):
 
 
 def update_movie(movies_dic):
+    """
+    Update the rating of an existing movie in the movies dictionary.
+
+    Args:
+    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+
+    Returns:
+    None
+    """
     movie = input("Enter movie name: ")
     rating = float(input("Enter new movie rating: "))
     if movie in movies_dic:
@@ -40,6 +76,15 @@ def update_movie(movies_dic):
 
 
 def stats(movies_dic):
+    """
+    Calculate and print statistics such as average rating, median rating, best movie, and worst movie from the movies dictionary.
+
+    Args:
+    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+
+    Returns:
+    None
+    """
     all_rating = [movie_data['rating'] for movie_data in movies_dic.values()]
     
     length_movie_dic = len(all_rating)
@@ -66,11 +111,29 @@ def stats(movies_dic):
 
 
 def random_movie(movies_dic):
+    """
+    Select and print a random movie from the movies dictionary.
+
+    Args:
+    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+
+    Returns:
+    None
+    """
     [random_movie] = random.sample(sorted(movies_dic.items()), 1)
     print(f"Your movie for tonight: {random_movie[0]}, it's rated {random_movie[1]['rating']}")
 
 
 def search_movie(movies_dic):
+    """
+    Search for a movie in the movies dictionary based on a partial movie name and print the matching results.
+
+    Args:
+    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+
+    Returns:
+    None
+    """
     search_path = input("Enter part of movie name: ")
     for movie, movie_data in movies_dic.items():
         if search_path.lower() in movie.lower():
@@ -78,12 +141,30 @@ def search_movie(movies_dic):
 
 
 def movies_sorted(movies_dic):
+    """
+    Sort and print the movies in the movies dictionary based on their ratings in descending order.
+
+    Args:
+    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+
+    Returns:
+    None
+    """
     sorted_movies = sorted(movies_dic.items(), key=lambda item: item[1]['rating'], reverse=True)
     for movie, details in sorted_movies:
         print(f"{movie}: {details['rating']}")
 
 
 def create_rating_histogram(movies_dic):
+    """
+    Create a histogram of movie ratings and save it as an image file.
+
+    Args:
+    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+
+    Returns:
+    None
+    """
     ratings = [movie['rating'] for movie in movies_dic.values()]
     plt.hist(ratings, bins=10)
     plt.xlabel("Movie Rating")
@@ -96,12 +177,23 @@ def create_rating_histogram(movies_dic):
 
 
 def exit_program():
-    """Exits the program."""
+    """
+    Exit the program.
+
+    Returns:
+    None
+    """
     print("Bye!")
     exit()  # Terminate the program
 
 
 def display_menu():
+    """
+    Display the menu options for the program.
+
+    Returns:
+    None
+    """
     print("********** My Movies Database **********")
     print(f"Menu:\n0. Exit\n1. List movies\n2. Add movie\n3." 
           f" Delete movie\n4. Update movie\n5. Stats\n6."
@@ -109,6 +201,12 @@ def display_menu():
           f" Create Rating Histogram\n")
 
 def get_user_input():
+    """
+    Get user input for menu options and validate the input.
+
+    Returns:
+    int: User's choice for the menu option.
+    """
     while True:
         try:
             user_input = int(input("Enter choice (0-9): "))
@@ -120,6 +218,12 @@ def get_user_input():
             print("Invalid input. Please enter a number.")
 
 def main():
+    """
+    Main function to run the program and interact with the user.
+
+    Returns:
+    None
+    """
     # Dictionary to store the movies and the rating
     movies = {
         "The Shawshank Redemption": {
