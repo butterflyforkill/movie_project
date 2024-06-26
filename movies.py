@@ -7,7 +7,8 @@ def list_of_movies(movies_dic):
     Print the list of movies with their ratings and year of release.
 
     Args:
-    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+    movies_dic (dict): A dictionary containing movie names
+      as keys and their corresponding rating and year of release as values.
 
     Returns:
     None
@@ -23,7 +24,8 @@ def add_movie(movies_dic):
     Add a new movie to the movies dictionary.
 
     Args:
-    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+    movies_dic (dict): A dictionary containing movie names
+      as keys and their corresponding rating and year of release as values.
 
     Returns:
     None
@@ -43,7 +45,8 @@ def delete_movie(movies_dic):
     Delete a movie from the movies dictionary.
 
     Args:
-    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+    movies_dic (dict): A dictionary containing movie names
+      as keys and their corresponding rating and year of release as values.
 
     Returns:
     None
@@ -61,7 +64,8 @@ def update_movie(movies_dic):
     Update the rating of an existing movie in the movies dictionary.
 
     Args:
-    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+    movies_dic (dict): A dictionary containing movie names
+      as keys and their corresponding rating and year of release as values.
 
     Returns:
     None
@@ -77,33 +81,28 @@ def update_movie(movies_dic):
 
 def stats(movies_dic):
     """
-    Calculate and print statistics such as average rating, median rating, best movie, and worst movie from the movies dictionary.
+    Calculate and print statistics such as average rating,
+    median rating, best movie, and worst movie from the movies dictionary.
 
     Args:
-    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+    movies_dic (dict): A dictionary containing movie names
+      as keys and their corresponding rating and year of release as values.
 
     Returns:
     None
     """
     all_rating = [movie_data['rating'] for movie_data in movies_dic.values()]
-    
     length_movie_dic = len(all_rating)
-    
     average_rating = sum(all_rating) / length_movie_dic
-    
     all_rating.sort()
-    
     if length_movie_dic % 2 == 0:
         index = length_movie_dic // 2
         median_rating = (all_rating[index] + all_rating[index - 1]) / 2
     else:
         index = length_movie_dic // 2
         median_rating = all_rating[index]
-    
     best_movie = max(movies_dic.items(), key=lambda x: x[1]['rating'])
-    
     worst_movie = min(movies_dic.items(), key=lambda x: x[1]['rating'])
-    
     print(f"Average rating: {average_rating}")
     print(f"Median rating: {median_rating}")
     print(f"Best movie: {best_movie[0]}, {best_movie[1]['rating']}")
@@ -115,21 +114,25 @@ def random_movie(movies_dic):
     Select and print a random movie from the movies dictionary.
 
     Args:
-    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+    movies_dic (dict): A dictionary containing movie names
+      as keys and their corresponding rating and year of release as values.
 
     Returns:
     None
     """
-    [random_movie] = random.sample(sorted(movies_dic.items()), 1)
-    print(f"Your movie for tonight: {random_movie[0]}, it's rated {random_movie[1]['rating']}")
+    [random_movie_dict] = random.sample(sorted(movies_dic.items()), 1)
+    print(f"Your movie for tonight: {random_movie_dict[0]},"
+          f"it's rated {random_movie_dict[1]['rating']}")
 
 
 def search_movie(movies_dic):
     """
-    Search for a movie in the movies dictionary based on a partial movie name and print the matching results.
+    Search for a movie in the movies dictionary based
+    on a partial movie name and print the matching results.
 
     Args:
-    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+    movies_dic (dict): A dictionary containing movie names
+      as keys and their corresponding rating and year of release as values.
 
     Returns:
     None
@@ -142,10 +145,12 @@ def search_movie(movies_dic):
 
 def movies_sorted(movies_dic):
     """
-    Sort and print the movies in the movies dictionary based on their ratings in descending order.
+    Sort and print the movies in the movies dictionary based
+    on their ratings in descending order.
 
     Args:
-    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+    movies_dic (dict): A dictionary containing movie names
+      as keys and their corresponding rating and year of release as values.
 
     Returns:
     None
@@ -160,7 +165,8 @@ def create_rating_histogram(movies_dic):
     Create a histogram of movie ratings and save it as an image file.
 
     Args:
-    movies_dic (dict): A dictionary containing movie names as keys and their corresponding rating and year of release as values.
+    movies_dic (dict): A dictionary containing movie names
+      as keys and their corresponding rating and year of release as values.
 
     Returns:
     None
@@ -184,7 +190,7 @@ def exit_program():
     None
     """
     print("Bye!")
-    exit()  # Terminate the program
+    sys.exit() # noqa: E0602
 
 
 def display_menu():
@@ -195,10 +201,10 @@ def display_menu():
     None
     """
     print("********** My Movies Database **********")
-    print(f"Menu:\n0. Exit\n1. List movies\n2. Add movie\n3." 
-          f" Delete movie\n4. Update movie\n5. Stats\n6."
-          f" Random movie\n7. Search movie\n8. Movies sorted by rating\n9."
-          f" Create Rating Histogram\n")
+    print("Menu:\n0. Exit\n1. List movies\n2. Add movie\n3."
+          " Delete movie\n4. Update movie\n5. Stats\n6."
+          " Random movie\n7. Search movie\n8. Movies sorted by rating\n9."
+          " Create Rating Histogram\n")
 
 def get_user_input():
     """
@@ -212,8 +218,6 @@ def get_user_input():
             user_input = int(input("Enter choice (0-9): "))
             if 0 <= user_input <= 9:
                 return user_input
-            else:
-                print("You entered the wrong key")
         except ValueError:
             print("Invalid input. Please enter a number.")
 
@@ -231,27 +235,27 @@ def main():
             'year_of_release': 1964
             },
         "Pulp Fiction": {
-            'rating': 9.5, 
+            'rating': 9.5,
             'year_of_release': 1964
             },
         "The Room": {
-            'rating': 9.5, 
+            'rating': 9.5,
             'year_of_release': 1964
             },
         "The Godfather": {
-            'rating': 9.5, 
+            'rating': 9.5,
             'year_of_release': 1964
             },
         "The Godfather: Part II": {
-            'rating': 9.5, 
+            'rating': 9.5,
             'year_of_release': 1964
             },
         "The Dark Knight": {
-            'rating': 9.5, 
+            'rating': 9.5,
             'year_of_release': 1964}
             ,
         "12 Angry Men": {
-            'rating': 1.9, 
+            'rating': 1.9,
             'year_of_release': 1964
             },
         "Everything Everywhere All At Once": {
@@ -259,14 +263,14 @@ def main():
              'year_of_release': 1964
              },
         "Forrest Gump": {
-            'rating': 9.5, 
+            'rating': 9.5,
             'year_of_release': 1964
             },
         "Star Wars: Episode V": {
-            'rating': 9.5, 
+            'rating': 9.5,
             'year_of_release': 1964
             }
-    }       
+    }
 
     # Your code here
     display_menu()
@@ -294,8 +298,6 @@ def main():
         choice = input("Press Enter to continue")
         if choice != '':
             break
-        else:
-            display_menu()
 
 
 if __name__ == "__main__":
