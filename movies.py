@@ -1,8 +1,10 @@
 import random
+import sys
 import matplotlib.pyplot as plt
+import movie_storage
 
 
-def list_of_movies(movies_dic):
+def list_of_movies():
     """
     Print the list of movies with their ratings and year of release.
 
@@ -13,13 +15,14 @@ def list_of_movies(movies_dic):
     Returns:
     None
     """
-    length = len(movies_dic)
+    movies_data = movie_storage.get_movies()
+    length = len(movies_data)
     print(f"{length} movies in total")
-    for movie_name, movies_data in movies_dic.items():
+    for movie_name, movies_data in movies_data.items():
         print(f"{movie_name}: {movies_data['rating']}, {movies_data['year_of_release']}")
 
 
-def add_movie(movies_dic):
+def add_movie():
     """
     Add a new movie to the movies dictionary.
 
@@ -33,14 +36,11 @@ def add_movie(movies_dic):
     movie = input("Enter new movie name: ")
     rating = float(input("Enter new movie rating: "))
     year = int(input("Please, enter the year of release: "))
-    movies_dic[movie] = {
-        'rating': rating,
-        'year_of_release': year
-    }
+    movie_storage.add_movie(movie, year, rating)
     print(f"Movie {movie} successfully added")
 
 
-def delete_movie(movies_dic):
+def delete_movie():
     """
     Delete a movie from the movies dictionary.
 
@@ -52,14 +52,10 @@ def delete_movie(movies_dic):
     None
     """
     movie = input("Enter movie name to delete: ")
-    if movie in movies_dic:
-        del movies_dic[movie]
-        print(f"Movie {movie} successfully deleted")
-    else:
-        print(f"ERROR: {movie} doesn't exist in the library")
+    movie_storage.delete_movie(movie)
 
 
-def update_movie(movies_dic):
+def update_movie():
     """
     Update the rating of an existing movie in the movies dictionary.
 
@@ -72,14 +68,10 @@ def update_movie(movies_dic):
     """
     movie = input("Enter movie name: ")
     rating = float(input("Enter new movie rating: "))
-    if movie in movies_dic:
-        movies_dic[movie].update([('rating', rating)])
-        print(f"Movie {movie} successfully updated")
-    else:
-        print(f"ERROR: {movie} doesn't exist in the library")
+    movie_storage.update_movie(movie, rating)
 
 
-def stats(movies_dic):
+def stats():
     """
     Calculate and print statistics such as average rating,
     median rating, best movie, and worst movie from the movies dictionary.
@@ -91,25 +83,26 @@ def stats(movies_dic):
     Returns:
     None
     """
-    all_rating = [movie_data['rating'] for movie_data in movies_dic.values()]
-    length_movie_dic = len(all_rating)
-    average_rating = sum(all_rating) / length_movie_dic
+    movies_data = movie_storage.get_movies()
+    all_rating = [movie_data['rating'] for movie_data in movies_data.values()]
+    length_movie_data = len(all_rating)
+    average_rating = round(sum(all_rating) / length_movie_data, 2)
     all_rating.sort()
-    if length_movie_dic % 2 == 0:
-        index = length_movie_dic // 2
+    if length_movie_data % 2 == 0:
+        index = length_movie_data // 2
         median_rating = (all_rating[index] + all_rating[index - 1]) / 2
     else:
-        index = length_movie_dic // 2
+        index = length_movie_data // 2
         median_rating = all_rating[index]
-    best_movie = max(movies_dic.items(), key=lambda x: x[1]['rating'])
-    worst_movie = min(movies_dic.items(), key=lambda x: x[1]['rating'])
+    best_movie = max(movies_data.items(), key=lambda x: x[1]['rating'])
+    worst_movie = min(movies_data.items(), key=lambda x: x[1]['rating'])
     print(f"Average rating: {average_rating}")
     print(f"Median rating: {median_rating}")
     print(f"Best movie: {best_movie[0]}, {best_movie[1]['rating']}")
     print(f"Worst movie: {worst_movie[0]}, {worst_movie[1]['rating']}")
 
 
-def random_movie(movies_dic):
+def random_movie():
     """
     Select and print a random movie from the movies dictionary.
 
@@ -120,12 +113,13 @@ def random_movie(movies_dic):
     Returns:
     None
     """
-    [random_movie_dict] = random.sample(sorted(movies_dic.items()), 1)
+    movies_data = movie_storage.get_movies()
+    [random_movie_dict] = random.sample(sorted(movies_data.items()), 1)
     print(f"Your movie for tonight: {random_movie_dict[0]},"
           f"it's rated {random_movie_dict[1]['rating']}")
 
 
-def search_movie(movies_dic):
+def search_movie():
     """
     Search for a movie in the movies dictionary based
     on a partial movie name and print the matching results.
@@ -137,13 +131,14 @@ def search_movie(movies_dic):
     Returns:
     None
     """
+    movies_data = movie_storage.get_movies()
     search_path = input("Enter part of movie name: ")
-    for movie, movie_data in movies_dic.items():
+    for movie, movie_data in movies_data.items():
         if search_path.lower() in movie.lower():
             print(f"{movie}, {movie_data['rating']}")
 
 
-def movies_sorted(movies_dic):
+def movies_sorted():
     """
     Sort and print the movies in the movies dictionary based
     on their ratings in descending order.
@@ -155,12 +150,13 @@ def movies_sorted(movies_dic):
     Returns:
     None
     """
-    sorted_movies = sorted(movies_dic.items(), key=lambda item: item[1]['rating'], reverse=True)
+    movies_data = movie_storage.get_movies()
+    sorted_movies = sorted(movies_data.items(), key=lambda item: item[1]['rating'], reverse=True)
     for movie, details in sorted_movies:
         print(f"{movie}: {details['rating']}")
 
 
-def create_rating_histogram(movies_dic):
+def create_rating_histogram():
     """
     Create a histogram of movie ratings and save it as an image file.
 
@@ -171,7 +167,8 @@ def create_rating_histogram(movies_dic):
     Returns:
     None
     """
-    ratings = [movie['rating'] for movie in movies_dic.values()]
+    movies_data = movie_storage.get_movies()
+    ratings = [movie['rating'] for movie in movies_data.values()]
     plt.hist(ratings, bins=10)
     plt.xlabel("Movie Rating")
     plt.ylabel("Number of Movies")
@@ -189,7 +186,8 @@ def exit_program():
     Returns:
     None
     """
-    print("Bye!")
+    print()
+    print("\nBye!\n")
     sys.exit() # noqa: E0602
 
 
@@ -228,51 +226,6 @@ def main():
     Returns:
     None
     """
-    # Dictionary to store the movies and the rating
-    movies = {
-        "The Shawshank Redemption": {
-            'rating': 9.5,
-            'year_of_release': 1964
-            },
-        "Pulp Fiction": {
-            'rating': 9.5,
-            'year_of_release': 1964
-            },
-        "The Room": {
-            'rating': 9.5,
-            'year_of_release': 1964
-            },
-        "The Godfather": {
-            'rating': 9.5,
-            'year_of_release': 1964
-            },
-        "The Godfather: Part II": {
-            'rating': 5.6,
-            'year_of_release': 1973
-            },
-        "The Dark Knight": {
-            'rating': 9.5,
-            'year_of_release': 1984}
-            ,
-        "12 Angry Men": {
-            'rating': 1.9,
-            'year_of_release': 1964
-            },
-        "Everything Everywhere All At Once": {
-            'rating': 8.9,
-             'year_of_release': 1964
-             },
-        "Forrest Gump": {
-            'rating': 9.5,
-            'year_of_release': 1964
-            },
-        "Star Wars: Episode V": {
-            'rating': 9.5,
-            'year_of_release': 1964
-            }
-    }
-
-    # Your code here
     display_menu()
 
     while True:
@@ -289,13 +242,12 @@ def main():
             8: movies_sorted,
             9: create_rating_histogram
        }
-        if user_input == 0:
+        if user_input in menu_functionality:
             menu_functionality[user_input]()
-        elif user_input in menu_functionality:
-            menu_functionality[user_input](movies)
         else:
             print("You entered the wrong key")
-        choice = input("Press Enter to continue")
+        choice = input("\nPress Enter to continue\n")
+        display_menu()
         if choice != '':
             break
 

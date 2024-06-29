@@ -1,3 +1,6 @@
+import json
+
+
 def get_movies():
     """
     Returns a dictionary of dictionaries that
@@ -17,13 +20,17 @@ def get_movies():
       },
     }
     """
-    pass
+    with open('data.json', 'r') as file:
+        movies = json.load(file)
+    return movies
+
 
 def save_movies(movies):
     """
     Gets all your movies as an argument and saves them to the JSON file.
     """
-    pass
+    with open('data.json', 'w') as file:
+        json.dump(movies, file)
 
 
 def add_movie(title, year, rating):
@@ -32,7 +39,16 @@ def add_movie(title, year, rating):
     Loads the information from the JSON file, add the movie,
     and saves it. The function doesn't need to validate the input.
     """
-    pass
+    all_movies = get_movies()
+    if title in all_movies:
+        print(f"Movie {title} already exist!")
+        return
+    new_movie = {
+      "year_of_release": year,
+      "rating": rating
+    }
+    all_movies[title] = new_movie
+    save_movies(all_movies)
 
 
 def delete_movie(title):
@@ -41,7 +57,13 @@ def delete_movie(title):
     Loads the information from the JSON file, deletes the movie,
     and saves it. The function doesn't need to validate the input.
     """
-    pass
+    all_movies = get_movies()
+    if title in all_movies:
+        del all_movies[title]
+        print(f"Movie {title} successfully deleted")
+    else:
+        print("Movie not found in the library")
+    save_movies(all_movies)
 
 
 def update_movie(title, rating):
@@ -50,5 +72,11 @@ def update_movie(title, rating):
     Loads the information from the JSON file, updates the movie,
     and saves it. The function doesn't need to validate the input.
     """
-    pass
-  
+    all_movies = get_movies()
+    if title in all_movies:
+        all_movies[title]["rating"] = rating
+        print(f"Movie {title} successfully updated")
+    else:
+        print(f"ERROR: {title} doesn't exist in the library")
+    save_movies(all_movies)
+      
