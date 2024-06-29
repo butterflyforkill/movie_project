@@ -247,19 +247,19 @@ def main():
             'year_of_release': 1964
             },
         "The Godfather: Part II": {
-            'rating': 9.5,
-            'year_of_release': 1964
+            'rating': 5.6,
+            'year_of_release': 1973
             },
         "The Dark Knight": {
             'rating': 9.5,
-            'year_of_release': 1964}
+            'year_of_release': 1984}
             ,
         "12 Angry Men": {
             'rating': 1.9,
             'year_of_release': 1964
             },
         "Everything Everywhere All At Once": {
-            'rating': 9.5,
+            'rating': 8.9,
              'year_of_release': 1964
              },
         "Forrest Gump": {
