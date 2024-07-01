@@ -2,6 +2,8 @@ import random
 import sys
 import matplotlib.pyplot as plt
 import movie_storage
+import requests
+from config.config_files import APIkeys
 
 
 def list_of_movies():
@@ -22,6 +24,17 @@ def list_of_movies():
         print(f"{movie_name}: {movies_data['rating']}, {movies_data['year_of_release']}")
 
 
+def response_parcer(resp):
+    if resp.status_code == requests.codes.ok:
+        if resp.json()['Response'] == 'False':
+            error_resp = resp.json()
+            return f"Error: {error_resp['Error']}"
+        else:
+            return resp.json()
+    else:
+        return f"Error: {resp.status_code}"
+
+
 def add_movie():
     """
     Add a new movie to the movies dictionary.
@@ -34,10 +47,22 @@ def add_movie():
     None
     """
     movie = input("Enter new movie name: ")
-    rating = float(input("Enter new movie rating: "))
-    year = int(input("Please, enter the year of release: "))
-    movie_storage.add_movie(movie, year, rating)
-    print(f"Movie {movie} successfully added")
+    all_movies = movie_storage.get_movies()
+    if movie in all_movies:
+        print(f"Movie {movie} already exist!")
+        return
+    api_url = f'http://www.omdbapi.com/?apikey={APIkeys.APIkey}&t={movie}'
+    response = requests.get(api_url)
+    parsed_resp = response_parcer(response)
+    if parsed_resp == 'Error: Movie not found!':
+        print(f"The movie {movie} doesn't exist")
+    elif type(parsed_resp) == str:
+        print(parsed_resp)
+    else:
+        rating = float(parsed_resp['Ratings'][0]['Value'].split('/')[0])
+        print(rating)
+        movie_storage.add_movie(movie, parsed_resp['Year'], rating, parsed_resp['Poster'])
+        print(f"Movie {movie} successfully added")
 
 
 def delete_movie():

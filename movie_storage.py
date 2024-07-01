@@ -33,19 +33,18 @@ def save_movies(movies):
         json.dump(movies, file)
 
 
-def add_movie(title, year, rating):
+def add_movie(title, year, rating, poster):
     """
     Adds a movie to the movies database.
     Loads the information from the JSON file, add the movie,
     and saves it. The function doesn't need to validate the input.
     """
     all_movies = get_movies()
-    if title in all_movies:
-        print(f"Movie {title} already exist!")
-        return
+   
     new_movie = {
       "year_of_release": year,
-      "rating": rating
+      "rating": rating,
+      "poster": poster
     }
     all_movies[title] = new_movie
     save_movies(all_movies)
@@ -79,4 +78,4 @@ def update_movie(title, rating):
     else:
         print(f"ERROR: {title} doesn't exist in the library")
     save_movies(all_movies)
-      
+    
