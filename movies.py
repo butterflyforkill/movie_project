@@ -1,8 +1,8 @@
 import random
 import sys
 import matplotlib.pyplot as plt
-import movie_storage
 import requests
+import movie_storage
 from config.config_files import APIkeys
 
 
@@ -20,11 +20,22 @@ def list_of_movies():
     movies_data = movie_storage.get_movies()
     length = len(movies_data)
     print(f"\n{length} movies in total\n")
-    for movie_name, movies_data in movies_data.items():
-        print(f"{movie_name}: {movies_data['rating']}, {movies_data['year_of_release']}")
+    for movie_name, movie_data in movies_data.items():
+        print(f"{movie_name}: {movie_data['rating']}, {movie_data['year_of_release']}")
 
 
-def response_parcer(resp):
+def response_parser(resp):
+    """
+    Parses the response from an HTTP request and returns the appropriate data or error message.
+
+    Args:
+    resp (requests.Response): The response object from the HTTP request.
+
+    Returns:
+    dict or str: If the response status code is OK and the JSON response indicates success, returns the JSON data.
+                If the JSON response indicates failure, returns an error message.
+                If the response status code is not OK, returns an error message with the status code.
+    """
     if resp.status_code == requests.codes.ok:
         if resp.json()['Response'] == 'False':
             error_resp = resp.json()
