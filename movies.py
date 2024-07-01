@@ -12,7 +12,8 @@ def list_of_movies():
 
     Args:
     movies_dic (dict): A dictionary containing movie names
-      as keys and their corresponding rating and year of release as values.
+      as keys and their corresponding rating and
+      year of release as values.
 
     Returns:
     None
@@ -26,15 +27,21 @@ def list_of_movies():
 
 def response_parser(resp):
     """
-    Parses the response from an HTTP request and returns the appropriate data or error message.
+    Parses the response from an HTTP request and
+    returns the appropriate data or error message.
 
     Args:
-    resp (requests.Response): The response object from the HTTP request.
+    resp (requests.Response): The response object
+        from the HTTP request.
 
     Returns:
-    dict or str: If the response status code is OK and the JSON response indicates success, returns the JSON data.
-                If the JSON response indicates failure, returns an error message.
-                If the response status code is not OK, returns an error message with the status code.
+    dict or str: If the response status code is OK
+                and the JSON response indicates success,
+                returns the JSON data.
+                If the JSON response indicates failure,
+                returns an error message.
+                If the response status code is not OK,
+                returns an error message with the status code.
     """
     if resp.status_code == requests.codes.ok:
         if resp.json()['Response'] == 'False':
