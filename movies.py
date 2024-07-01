@@ -19,7 +19,7 @@ def list_of_movies():
     """
     movies_data = movie_storage.get_movies()
     length = len(movies_data)
-    print(f"{length} movies in total")
+    print(f"\n{length} movies in total\n")
     for movie_name, movies_data in movies_data.items():
         print(f"{movie_name}: {movies_data['rating']}, {movies_data['year_of_release']}")
 
