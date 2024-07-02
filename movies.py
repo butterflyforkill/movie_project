@@ -110,8 +110,8 @@ def update_movie():
     None
     """
     movie = input("Enter movie name: ")
-    rating = float(input("Enter new movie rating: "))
-    movie_storage.update_movie(movie, rating)
+    notes = input("Enter movie notes: ")
+    movie_storage.update_movie(movie, notes)
 
 
 def stats():
@@ -269,7 +269,11 @@ def generate_web_site():
         output_movies += f"<img class='movie-poster' src={movie['poster']}> \n"
         output_movies += f"<div class='movie-title'>{title}</div> \n"
         output_movies += f"<div class='movie-year'>{movie['year_of_release']}</div> \n"
-        output_movies += '</div> \n </li>'
+        output_movies += f"<div class='movie-rating'>"
+        output_movies += f"<span class='rating-value'>{movie['rating']}</span></div>"
+        if 'notes' in movie:
+            output_movies += f"<div class='movie-note'>{movie['notes']}</div>"
+        output_movies += '</div> \n </li>' 
     new_html_data = new_html_data.replace('__TEMPLATE_MOVIE_GRID__', output_movies)
     write_new_html(new_html_data, '_static/index.html')
     print('Website was generated successfully.')

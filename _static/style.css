@@ -1,12 +1,12 @@
 body {
-  background: #F5F5F0;
+  background: #f5f5f0;
   color: black;
   font-family: Monaco;
 }
 
 .list-movies-title {
   padding: 10px 0;
-  background: #009B50;
+  background: #009b50;
   color: white;
   text-align: center;
   font-size: 16pt;
@@ -19,6 +19,7 @@ body {
   margin-top: 20px;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .movie-grid li {
@@ -28,6 +29,7 @@ body {
 
 .movie {
   width: 140px;
+  position: relative;
 }
 
 .movie-title,
@@ -44,9 +46,38 @@ body {
   color: #999;
 }
 
+.movie-rating {
+  font-size: 24px;
+  color: darkolivegreen;
+
+}
 
 .movie-poster {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    width: 128px;
-    height: 193px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  width: 128px;
+  height: 193px;
+}
+.movie-note {
+  display: none; 
+  position: absolute; 
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.7
+  ); 
+  color: #fff; 
+  padding: 10px; 
+  bottom: 70; 
+  left: 50; 
+  right: 0; 
+  transition: opacity 0.3s; 
+  font-size: 10px;
+  text-align: center;
+  border-radius: 5px;
+}
+.movie:hover .movie-note {
+  display:block;
+  opacity: 1;
+
 }

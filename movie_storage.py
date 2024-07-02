@@ -65,7 +65,7 @@ def delete_movie(title):
     save_movies(all_movies)
 
 
-def update_movie(title, rating):
+def update_movie(title, notes):
     """
     Updates a movie from the movies database.
     Loads the information from the JSON file, updates the movie,
@@ -73,8 +73,8 @@ def update_movie(title, rating):
     """
     all_movies = get_movies()
     if title in all_movies:
-        all_movies[title]["rating"] = rating
-        print(f"Movie {title} successfully updated")
+        all_movies[title]["notes"] = notes
+        print(f"Movie {title} successfully updated. The notes was added.")
     else:
         print(f"ERROR: {title} doesn't exist in the library")
     save_movies(all_movies)
