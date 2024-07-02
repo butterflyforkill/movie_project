@@ -71,7 +71,7 @@ def add_movie():
         return
     api_url = f'http://www.omdbapi.com/?apikey={APIkeys.APIkey}&t={movie}'
     response = requests.get(api_url)
-    parsed_resp = response_parcer(response)
+    parsed_resp = response_parser(response)
     if parsed_resp == 'Error: Movie not found!':
         print(f"The movie {movie} doesn't exist")
     elif type(parsed_resp) == str:
@@ -222,6 +222,59 @@ def create_rating_histogram():
     print(f"Histogram saved as {filename}")
 
 
+def read_html(file_path):
+    """Load HTML file
+
+    Args:
+        file_path: html file
+
+    Returns:
+        string: html file
+    """
+    with open(file_path, "r") as file:
+        return file.read()
+
+
+def write_new_html(data, html_name):
+    """Write new html file with replaced animal data
+
+    Args:
+        data (string): animal data
+        html_name (string): name of the file
+    """
+    with open(html_name, 'w') as file:
+        file.write(data)
+        
+        
+def generate_web_site():
+    """
+    Generate a web site based on the movie data.
+
+    This function retrieves all movies data from the movie storage, 
+    reads an HTML template, replaces the title with the output website name, 
+    generates HTML content for each movie, replaces the movie grid template 
+    in the HTML with the generated movie content, writes the new HTML data 
+    to a file, and prints a success message.
+
+    Returns:
+    None
+    """
+    all_movies_data = movie_storage.get_movies()
+    html_string = read_html('_static/index_template.html')
+    output_website_name = 'Interesting movies - website for everyone'
+    new_html_data = html_string.replace("__TEMPLATE_TITLE__", output_website_name)
+    output_movies = ''
+    for title, movie in all_movies_data.items():
+        output_movies += '\n<li> <div class="movie"> '
+        output_movies += f"<img class='movie-poster' src={movie['poster']}> \n"
+        output_movies += f"<div class='movie-title'>{title}</div> \n"
+        output_movies += f"<div class='movie-year'>{movie['year_of_release']}</div> \n"
+        output_movies += '</div> \n </li>'
+    new_html_data = new_html_data.replace('__TEMPLATE_MOVIE_GRID__', output_movies)
+    write_new_html(new_html_data, '_static/index.html')
+    print('Website was generated successfully.')
+
+
 def exit_program():
     """
     Exit the program.
@@ -245,7 +298,7 @@ def display_menu():
     print("Menu:\n0. Exit\n1. List movies\n2. Add movie\n3."
           " Delete movie\n4. Update movie\n5. Stats\n6."
           " Random movie\n7. Search movie\n8. Movies sorted by rating\n9."
-          " Create Rating Histogram\n")
+          " Create Rating Histogram\n10. Generate website\n")
 
 def get_user_input():
     """
@@ -256,8 +309,8 @@ def get_user_input():
     """
     while True:
         try:
-            user_input = int(input("Enter choice (0-9): "))
-            if 0 <= user_input <= 9:
+            user_input = int(input("Enter choice (0-10): "))
+            if 0 <= user_input <= 10:
                 return user_input
         except ValueError:
             print("Invalid input. Please enter a number.")
@@ -283,7 +336,8 @@ def main():
             6: random_movie,
             7: search_movie,
             8: movies_sorted,
-            9: create_rating_histogram
+            9: create_rating_histogram,
+            10: generate_web_site
        }
         if user_input in menu_functionality:
             menu_functionality[user_input]()
