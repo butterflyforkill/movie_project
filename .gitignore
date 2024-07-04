@@ -3,3 +3,4 @@
 .codio
 .guides/
 config/.env
+.env
