@@ -27,7 +27,8 @@ def get_movies():
 
 def save_movies(movies):
     """
-    Gets all your movies as an argument and saves them to the JSON file.
+    Gets all your movies as an argument
+    and saves them to the JSON file.
     """
     with open('data.json', 'w') as file:
         json.dump(movies, file)
@@ -36,8 +37,9 @@ def save_movies(movies):
 def add_movie(title, year, rating, poster, plot, genre, director):
     """
     Adds a movie to the movies database.
-    Loads the information from the JSON file, add the movie,
-    and saves it. The function doesn't need to validate the input.
+    Loads the information from the JSON file,
+    add the movie and saves it. 
+    The function doesn't need to validate the input.
     """
     all_movies = get_movies()
    
@@ -56,8 +58,9 @@ def add_movie(title, year, rating, poster, plot, genre, director):
 def delete_movie(title):
     """
     Deletes a movie from the movies database.
-    Loads the information from the JSON file, deletes the movie,
-    and saves it. The function doesn't need to validate the input.
+    Loads the information from the JSON file,
+    deletes the movie, and saves it. 
+    The function doesn't need to validate the input.
     """
     all_movies = get_movies()
     if title in all_movies:
@@ -71,8 +74,9 @@ def delete_movie(title):
 def update_movie(title, notes):
     """
     Updates a movie from the movies database.
-    Loads the information from the JSON file, updates the movie,
-    and saves it. The function doesn't need to validate the input.
+    Loads the information from the JSON file, 
+    updates the movie and saves it. 
+    The function doesn't need to validate the input.
     """
     all_movies = get_movies()
     if title in all_movies:

@@ -12,7 +12,8 @@ MOVIE_HTML_PATH = '_static/movie_template.html'
 
 def list_of_movies():
     """
-    Print the list of movies with their ratings and year of release.
+    Print the list of movies with their ratings 
+    and year of release.
 
     Args:
     movies_dic (dict): A dictionary containing movie names
@@ -26,7 +27,8 @@ def list_of_movies():
     length = len(movies_data)
     print(f"\n{length} movies in total\n")
     for movie_name, movie_data in movies_data.items():
-        print(f"{movie_name}: {movie_data['rating']}, {movie_data['year_of_release']}")
+        print(f"{movie_name}: {movie_data['rating']}", 
+              f"{movie_data['year_of_release']}")
 
 
 def response_parser(resp):
@@ -63,7 +65,8 @@ def add_movie():
 
     Args:
     movies_dic (dict): A dictionary containing movie names
-      as keys and their corresponding rating and year of release as values.
+      as keys and their corresponding rating 
+      and year of release as values.
 
     Returns:
     None
@@ -103,7 +106,8 @@ def delete_movie():
 
     Args:
     movies_dic (dict): A dictionary containing movie names
-      as keys and their corresponding rating and year of release as values.
+      as keys and their corresponding rating 
+      and year of release as values.
 
     Returns:
     None
@@ -118,7 +122,8 @@ def update_movie():
 
     Args:
     movies_dic (dict): A dictionary containing movie names
-      as keys and their corresponding rating and year of release as values.
+      as keys and their corresponding 
+      rating and year of release as values.
 
     Returns:
     None
@@ -238,11 +243,14 @@ def create_rating_histogram():
 
 def generate_movie_page():
     """
-    Generates individual HTML pages for each movie based on the movie data stored in the movie storage.
+    Generates individual HTML pages for each movie based
+    on the movie data stored in the movie storage.
     
     Retrieves all movies data from the movie storage.
     Reads the movie HTML template from the specified path.
-    Iterates through each movie, replaces placeholders in the HTML template with movie-specific data, and writes the new HTML page for each movie.
+    Iterates through each movie, replaces placeholders
+    in the HTML template with movie-specific data,
+    and writes the new HTML page for each movie.
     Prints a success message after generating all movie pages.
 
     Returns:
@@ -251,14 +259,20 @@ def generate_movie_page():
     all_movies_data = movie_storage.get_movies()
     movie_html_string = docs_parcer.read_html(MOVIE_HTML_PATH)
     for title, movie in all_movies_data.items():
-        new_html_movie = movie_html_string.replace('__MOVIE_NAME__', title)
+        new_html_movie = movie_html_string.replace(
+          '__MOVIE_NAME__', title
+          )
         poster_string = f"<img class='movie-poster' src={movie['poster']}> \n"
         new_html_movie = new_html_movie.replace('__MOVIE_POSTER__', poster_string)
         description_string = ''
-        description_string += f"<div class='movie-description'> <ul><li>Director: {movie['director']} </li>"
+        description_string += f"<div class='movie-description'>"
+        description_string += f"<ul><li>Director:{movie['director']}</li>"
         description_string += f"<li>Genre: {movie['genre']} </li> </ul> "
-        description_string += f"Summary: {movie['plot']} </div> <p><button><a href='index.html'>RETURN</a></button></p>"
-        new_html_movie = new_html_movie.replace('__MOVIE_DESCRIPTION__', description_string)
+        description_string += f"Summary: {movie['plot']} </div>"
+        description_string += f"<p><button><a href='index.html'>RETURN</a></button></p>"
+        new_html_movie = new_html_movie.replace(
+          '__MOVIE_DESCRIPTION__', description_string
+          )
         docs_parcer.write_new_html(new_html_movie, f'_static/movie_{title}.html')
     print("Movie pages was successfully generated")
     
@@ -268,9 +282,12 @@ def generate_web_site():
     Generate a web site based on the movie data.
 
     This function retrieves all movies data from the movie storage, 
-    reads an HTML template, replaces the title with the output website name, 
-    generates HTML content for each movie, replaces the movie grid template 
-    in the HTML with the generated movie content, writes the new HTML data 
+    reads an HTML template, replaces
+    the title with the output website name, 
+    generates HTML content for each movie,
+    replaces the movie grid template 
+    in the HTML with the generated movie content,
+    writes the new HTML data 
     to a file, and prints a success message.
 
     Returns:
@@ -283,9 +300,10 @@ def generate_web_site():
     output_movies = ''
     for title, movie in all_movies_data.items():
         output_movies += '\n<li> <div class="movie"> '
-        output_movies += f"<img class='movie-poster' src={movie['poster']}> \n"
-        output_movies += f"<div class='movie-title'><a href='./movie_{title}.html'>{title}</a></div> \n"
-        output_movies += f"<div class='movie-year'>{movie['year_of_release']}</div> \n"
+        output_movies += f"<img class='movie-poster' src={movie['poster']}>"
+        output_movies += f"<div class='movie-title'><a href='./movie_{title}"
+        output_movies += f".html'>{title}</a></div>"
+        output_movies += f"<div class='movie-year'>{movie['year_of_release']}</div>"
         output_movies += f"<div class='movie-rating'>"
         output_movies += f"<span class='rating-value'>{movie['rating']}</span></div>"
         if 'notes' in movie:
@@ -319,7 +337,8 @@ def display_menu():
     print("********** My Movies Database **********")
     print("Menu:\n0. Exit\n1. List movies\n2. Add movie\n3."
           " Delete movie\n4. Update movie\n5. Stats\n6."
-          " Random movie\n7. Search movie\n8. Movies sorted by rating\n9."
+          " Random movie\n7. Search movie\n8.
+          " Movies sorted by rating\n9."
           " Create Rating Histogram\n10. Generate website\n")
 
 def get_user_input():
