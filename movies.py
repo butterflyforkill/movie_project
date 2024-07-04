@@ -337,7 +337,7 @@ def display_menu():
     print("********** My Movies Database **********")
     print("Menu:\n0. Exit\n1. List movies\n2. Add movie\n3."
           " Delete movie\n4. Update movie\n5. Stats\n6."
-          " Random movie\n7. Search movie\n8.
+          " Random movie\n7. Search movie\n8."
           " Movies sorted by rating\n9."
           " Create Rating Histogram\n10. Generate website\n")
 
