@@ -8,7 +8,7 @@ To install this project, simply clone the repository and install the dependencie
 
 ## Usage
 
-To use this project, run the following command - `python3 main.py` or `python main.py`.
+To use this project, run the following command - `python3 movies.py` or `python movies.py`.
 
 ## Contributing
 

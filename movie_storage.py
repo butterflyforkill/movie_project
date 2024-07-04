@@ -33,7 +33,7 @@ def save_movies(movies):
         json.dump(movies, file)
 
 
-def add_movie(title, year, rating, poster):
+def add_movie(title, year, rating, poster, plot, genre, director):
     """
     Adds a movie to the movies database.
     Loads the information from the JSON file, add the movie,
@@ -44,7 +44,10 @@ def add_movie(title, year, rating, poster):
     new_movie = {
       "year_of_release": year,
       "rating": rating,
-      "poster": poster
+      "poster": poster,
+      "plot": plot,
+      "genre": genre,
+      "director": director
     }
     all_movies[title] = new_movie
     save_movies(all_movies)
