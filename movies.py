@@ -3,7 +3,7 @@ import sys
 import matplotlib.pyplot as plt
 import requests
 import movie_storage
-import html_parcer
+import docs_parcer
 from config.config_files import APIkeys
 
 INDEX_HTML_PATH = '_static/index_template.html'
@@ -249,7 +249,7 @@ def generate_movie_page():
     None
     """
     all_movies_data = movie_storage.get_movies()
-    movie_html_string = html_parcer.read_html(MOVIE_HTML_PATH)
+    movie_html_string = docs_parcer.read_html(MOVIE_HTML_PATH)
     for title, movie in all_movies_data.items():
         new_html_movie = movie_html_string.replace('__MOVIE_NAME__', title)
         poster_string = f"<img class='movie-poster' src={movie['poster']}> \n"
@@ -259,7 +259,7 @@ def generate_movie_page():
         description_string += f"<li>Genre: {movie['genre']} </li> </ul> "
         description_string += f"Summary: {movie['plot']} </div> <p><button><a href='index.html'>RETURN</a></button></p>"
         new_html_movie = new_html_movie.replace('__MOVIE_DESCRIPTION__', description_string)
-        html_parcer.write_new_html(new_html_movie, f'_static/movie_{title}.html')
+        docs_parcer.write_new_html(new_html_movie, f'_static/movie_{title}.html')
     print("Movie pages was successfully generated")
     
         
@@ -277,7 +277,7 @@ def generate_web_site():
     None
     """
     all_movies_data = movie_storage.get_movies()
-    html_string = html_parcer.read_html(INDEX_HTML_PATH)
+    html_string = docs_parcer.read_html(INDEX_HTML_PATH)
     output_website_name = 'Interesting movies - website for everyone'
     new_html_data = html_string.replace("__TEMPLATE_TITLE__", output_website_name)
     output_movies = ''
@@ -293,7 +293,7 @@ def generate_web_site():
         output_movies += '</div> \n </li>'
     new_html_data = new_html_data.replace('__TEMPLATE_MOVIE_GRID__', output_movies)
     generate_movie_page()
-    html_parcer.write_new_html(new_html_data, '_static/index.html')
+    docs_parcer.write_new_html(new_html_data, '_static/index.html')
     print('Website was generated successfully.')
 
 
