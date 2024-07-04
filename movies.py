@@ -237,6 +237,17 @@ def create_rating_histogram():
 
 
 def generate_movie_page():
+    """
+    Generates individual HTML pages for each movie based on the movie data stored in the movie storage.
+    
+    Retrieves all movies data from the movie storage.
+    Reads the movie HTML template from the specified path.
+    Iterates through each movie, replaces placeholders in the HTML template with movie-specific data, and writes the new HTML page for each movie.
+    Prints a success message after generating all movie pages.
+
+    Returns:
+    None
+    """
     all_movies_data = movie_storage.get_movies()
     movie_html_string = html_parcer.read_html(MOVIE_HTML_PATH)
     for title, movie in all_movies_data.items():
@@ -249,7 +260,7 @@ def generate_movie_page():
         description_string += f"Summary: {movie['plot']} </div> <p><button><a href='index.html'>RETURN</a></button></p>"
         new_html_movie = new_html_movie.replace('__MOVIE_DESCRIPTION__', description_string)
         html_parcer.write_new_html(new_html_movie, f'_static/movie_{title}.html')
-    print("Movie page was successfully generated")
+    print("Movie pages was successfully generated")
     
         
 def generate_web_site():
