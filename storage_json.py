@@ -65,7 +65,7 @@ class StorageJson(IStorage):
         Returns:
         list: A list of all movies in the storage.
         """
-        return list(self.movies.values())
+        return self.movies
 
 
     def add_movie(self, title, year, rating, poster, plot, genre, director):

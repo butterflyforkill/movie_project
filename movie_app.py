@@ -173,9 +173,9 @@ class MovieApp:
         Returns:
             None
         """
-        movies_data = self._storage.get_movies()
+        movies_data = self._storage.list_movies()
         [random_movie_dict] = random.sample(sorted(movies_data.items()), 1)
-        print(f"Your movie for tonight: {random_movie_dict[0]},"
+        print(f"Your movie for tonight: {random_movie_dict[0]}, "
               f"it's rated {random_movie_dict[1]['rating']}")
 
 
@@ -191,7 +191,7 @@ class MovieApp:
             None
 
         """
-        movies_data = self._storage.get_movies()
+        movies_data = self._storage.list_movies()
         search_path = input("Enter part of movie name: ")
         for movie, movie_data in movies_data.items():
             if search_path.lower() in movie.lower():
@@ -209,7 +209,7 @@ class MovieApp:
             None
 
         """
-        movies_data = self._storage.get_movies()
+        movies_data = self._storage.list_movies()
         sorted_movies = sorted(movies_data.items(), key=lambda item: item[1]['rating'], reverse=True)
         for movie, details in sorted_movies:
             print(f"{movie}: {details['rating']}")
@@ -236,7 +236,7 @@ class MovieApp:
             None
 
         """
-        movies_data = self._storage.get_movies()
+        movies_data = self._storage.list_movies()
         all_rating = [movie_data['rating'] for movie_data in movies_data.values()]
         length_movie_data = len(all_rating)
         average_rating = round(sum(all_rating) / length_movie_data, 2)
@@ -271,7 +271,7 @@ class MovieApp:
         Returns:
             None
         """
-        movies_data = self._storage.get_movies()
+        movies_data = self._storage.list_movies()
         ratings = [movie['rating'] for movie in movies_data.values()]
         plt.hist(ratings, bins=10)
         plt.xlabel("Movie Rating")
@@ -298,7 +298,7 @@ class MovieApp:
         Returns:
         None
         """
-        all_movies_data = self._storage.get_movies()
+        all_movies_data = self._storage.list_movies()
         movie_html_string = docs_parcer.read_html(MOVIE_HTML_PATH)
         for title, movie in all_movies_data.items():
             new_html_movie = movie_html_string.replace(
@@ -335,7 +335,7 @@ class MovieApp:
         Returns:
         None
         """
-        all_movies_data = self._storage.get_movies()
+        all_movies_data = self._storage.list_movies()
         html_string = docs_parcer.read_html(INDEX_HTML_PATH)
         output_website_name = 'Interesting movies - website for everyone'
         new_html_data = html_string.replace("__TEMPLATE_TITLE__", output_website_name)

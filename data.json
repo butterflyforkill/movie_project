@@ -87,14 +87,6 @@
         "genre": "Drama, Romance",
         "director": "Xavier Dolan"
     },
-    "It's only the end of the world": {
-        "year_of_release": "2016",
-        "rating": 6.8,
-        "poster": "https://m.media-amazon.com/images/M/MV5BZTYxMDA1NDItZmU5YS00ZTA3LThlZWUtNWFjYjI5OTNlMzUyXkEyXkFqcGdeQXVyMTU3NDU4MDg2._V1_SX300.jpg",
-        "plot": "Louis (Gaspard Ulliel), a terminally ill writer, returns home after a long absence to tell his family that he is dying.",
-        "genre": "Drama",
-        "director": "Xavier Dolan"
-    },
     "Pulp Fiction": {
         "year_of_release": "1994",
         "rating": 8.9,
@@ -110,5 +102,13 @@
         "plot": "A modern action adventure road story where a 17-year-old girl named Suzume helps a mysterious young man close doors from the other side that are releasing disasters all over in Japan.",
         "genre": "Animation, Action, Adventure",
         "director": "Makoto Shinkai"
+    },
+    "Naruto": {
+        "year_of_release": "2002",
+        "rating": 8.4,
+        "poster": "https://m.media-amazon.com/images/M/MV5BZmQ5NGFiNWEtMmMyMC00MDdiLTg4YjktOGY5Yzc2MDUxMTE1XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg",
+        "plot": "Naruto Uzumaki, a mischievous adolescent ninja, struggles as he searches for recognition and dreams of becoming the Hokage, the village's leader and strongest ninja.",
+        "genre": "Animation, Action, Adventure",
+        "director": "N/A"
     }
 }
