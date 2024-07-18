@@ -1,6 +1,6 @@
 # My Movie Project
 
-This project is for one of the lessons in Masterschool.
+This project can simplify your life, while you're trying to list all your favourite movies.
 
 ## Views
 <img width="1435" alt="Screenshot 2024-07-09 at 16 47 11" src="https://github.com/butterflyforkill/movie_project/assets/46646977/1238e9ea-6aa0-49e9-85f9-e86a7e989807">
