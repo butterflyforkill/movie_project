@@ -1,28 +1,29 @@
-import json
+import csv
 from istorage import IStorage
 
 
-class StorageJson(IStorage):
+class StorageCsv(IStorage):
     """
-    A storage implementation using JSON file to store and manage movie data.
+    A storage implementation using CSV file to store and manage movie data.
 
     Args:
-    file_path (str): The file path for the JSON file used for storing movie data.
+    file_path (str): The file path for the CSV file used for storing movie data.
 
     Methods:
-    - _load_data: Loads movie data from the JSON file.
-    - _save_data: Saves movie data to the JSON file.
-    - list_movies: Returns a list of all movies in the storage.
+    - _load_data: Loads movie data from the CSV file.
+    - _save_data: Saves movie data to the CSV file.
+    - list_movies: Returns a dictionary of all movies in the storage.
     - add_movie: Adds a new movie to the storage.
     - delete_movie: Deletes a specific movie from the storage.
     - update_movie: Updates the rating of a specific movie in the storage.
     """
+
     def __init__(self, file_path):
         """
         Initializes a new instance of the class.
 
         Args:
-        file_path (str): The file path for the JSON file used for storing movie data.
+        file_path (str): The file path for the CSV file used for storing movie data.
 
         Returns:
         None
@@ -34,14 +35,17 @@ class StorageJson(IStorage):
 
     def _load_data(self):
         """
-        Loads movie data from the JSON file.
+        Loads movie data from the CSV file.
 
         Returns:
         None
         """
         try:
-            with open(self.file_path, 'r') as file:
-                self.movies = json.load(file)
+            with open(self.file_path, 'r', newline='') as file:
+                csv_reader = csv.DictReader(file)
+                for row in csv_reader:
+                    title = row.pop('title')
+                    self.movies[title] = row
         except FileNotFoundError:
             # If the file does not exist, initialize an empty dictionary for movies
             self.movies = {}
@@ -49,21 +53,26 @@ class StorageJson(IStorage):
 
     def _save_data(self):
         """
-        Saves movie data to the JSON file.
+        Saves movie data to the CSV file.
 
         Returns:
         None
         """
-        with open(self.file_path, 'w') as file:
-            json.dump(self.movies, file, indent=4)
+        with open(self.file_path, 'w', newline='', encoding='utf-8') as file:
+            fieldnames = ['title', 'year_of_release', 'rating', 'poster', 'plot', 'genre', 'director']
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            for title, movie_details in self.movies.items():
+                data = {'title': title, 'year_of_release': movie_details['year_of_release'], 'rating': movie_details['rating'], 'poster': movie_details['poster'], 'plot': movie_details['plot'], 'genre': movie_details['genre'], 'director': movie_details['director']}
+                writer.writerow(data)
 
 
     def list_movies(self):
         """
-        Returns a dict of all movies in the storage.
+        Returns a dictionary of all movies in the storage.
 
         Returns:
-        dict: A dict of all movies in the storage.
+        dict: A dictionary of all movies in the storage.
         """
         return self.movies
 
@@ -75,7 +84,7 @@ class StorageJson(IStorage):
         Args:
         title (str): The title of the movie.
         year (str): The year of release of the movie.
-        rating (float): The rating of the movie.
+        rating (str): The rating of the movie.
         poster (str): The URL of the movie poster.
         plot (str): The plot summary of the movie.
         genre (str): The genre of the movie.
@@ -91,7 +100,7 @@ class StorageJson(IStorage):
             "plot": plot,
             "genre": genre,
             "director": director
-            }
+        }
         self.movies[title] = new_movie
         self._save_data()
 
@@ -129,7 +138,7 @@ class StorageJson(IStorage):
 
         Args:
         title (str): The title of the movie to be updated.
-        rating (float): The new rating of the movie.
+        rating (str): The new rating of the movie.
 
         Returns:
         None

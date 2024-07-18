@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import requests
 import docs_parcer
 from config.config_files import APIkeys
-
+from storage_csv import StorageCsv
 
 INDEX_HTML_PATH = '_static/index_template.html'
 MOVIE_HTML_PATH = '_static/movie_template.html'
@@ -123,7 +123,7 @@ class MovieApp:
             year = year_str[0:4]
             print(rating)
             self._storage.add_movie(
-                movie,
+                parsed_resp['Title'],
                 year, 
                 rating, 
                 parsed_resp['Poster'],
@@ -159,7 +159,7 @@ class MovieApp:
             None
         """
         movie = input("Enter movie name: ")
-        rating = input("Enter movie notes: ")
+        rating = input("Enter movie's new rating: ")
         self._storage.update_movie(movie, rating)
 
 
@@ -237,7 +237,7 @@ class MovieApp:
 
         """
         movies_data = self._storage.list_movies()
-        all_rating = [movie_data['rating'] for movie_data in movies_data.values()]
+        all_rating = [float(movie_data['rating']) for movie_data in movies_data.values()]
         length_movie_data = len(all_rating)
         average_rating = round(sum(all_rating) / length_movie_data, 2)
         all_rating.sort()
@@ -438,3 +438,9 @@ class MovieApp:
             self.display_menu()
             if choice != '':
                 break
+
+
+
+storage2 = StorageCsv("mom.csv")
+movies = MovieApp(storage2)
+movies._command_movie_stats()

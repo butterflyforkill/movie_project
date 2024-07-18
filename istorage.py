@@ -5,10 +5,20 @@ class IStorage(ABC):
 
     @abstractmethod
     def list_movies(self):
-        """Retrieve a list of all movies stored in the storage.
+        """
+        Returns a dictionary of dictionaries that
+        contains the movies information in the database.
 
-        Returns:
-        list: A list of all movies stored in the storage.
+        For example, the function may return:
+        {
+        "Titanic": {
+            "rating": 9,
+            "year": 1999
+        },
+        "..." {
+            ...
+        },
+        }
         """
         pass
 
@@ -24,7 +34,7 @@ class IStorage(ABC):
         poster (str): The URL of the movie's poster.
 
         Returns:
-        bool: True if the movie is successfully added, otherwise False.
+        None
         """
         pass
 
@@ -37,7 +47,7 @@ class IStorage(ABC):
         title (str): The title of the movie to be deleted.
 
         Returns:
-        bool: True if the movie is successfully deleted, otherwise False.
+        None
         """
         pass
 
@@ -51,6 +61,6 @@ class IStorage(ABC):
         rating (float): The new rating of the movie.
 
         Returns:
-        bool: True if the movie is successfully updated, otherwise False.
+        None
         """
         pass
