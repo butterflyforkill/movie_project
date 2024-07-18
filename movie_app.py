@@ -438,9 +438,3 @@ class MovieApp:
             self.display_menu()
             if choice != '':
                 break
-
-
-
-storage2 = StorageCsv("mom.csv")
-movies = MovieApp(storage2)
-movies._command_movie_stats()
