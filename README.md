@@ -1,4 +1,4 @@
-# My Movie Project: Phase II
+# My Movie Project
 
 This project is for one of the lessons in Masterschool.
 
@@ -14,7 +14,7 @@ To install this project, simply clone the repository.
 
 ## Usage
 
-To use this project, run the following command - `python3 movies.py` or `python movies.py`.
+To use this project, run the following command - `python3 main.py` or `python main.py`.
 
 ## Contributing
 
